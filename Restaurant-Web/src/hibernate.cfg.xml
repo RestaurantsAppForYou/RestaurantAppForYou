@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<!-- <property name="hibernate.connection.url">jdbc:oracle:thin:@127.0.0.1:8088:TEST</property> -->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">password</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.default_schema">test</property>
+		<property name="show_sql">true</property>
+
+		<!-- ENTITIES -->
+
+		<mapping class="com.restaurants.entity.RestaurantsEntity" />
+		<mapping class="com.restaurants.entity.LocationEntity" />
+		<mapping class="com.restaurants.entity.OrderEntity" />
+
+	</session-factory>
+</hibernate-configuration>
