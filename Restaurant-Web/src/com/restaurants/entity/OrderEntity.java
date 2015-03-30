@@ -1,5 +1,6 @@
 package com.restaurants.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,9 +8,13 @@ import javax.persistence.Id;
 public class OrderEntity {
 
 	@Id
+	@Column
 	String orderId;
+	@Column
 	String numberOfPeople;
+	@Column
 	String price;
+	@Column
 	String totalPrice;
 	public String getOrderId() {
 		return orderId;

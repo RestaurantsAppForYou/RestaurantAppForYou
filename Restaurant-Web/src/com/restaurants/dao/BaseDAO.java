@@ -1,8 +1,9 @@
 package com.restaurants.dao;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 public interface BaseDAO {
 
-	public Session getSession();
+	public SessionFactory getSessionFactory();
 }

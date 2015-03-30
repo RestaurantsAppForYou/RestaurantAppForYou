@@ -1,16 +1,29 @@
 package com.restaurants.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-@Entity
+@Entity(name="restaurant")
 public class RestaurantsEntity {
 
 	@Id
+	@Column
 	String restaurantID;
+	@Column
 	String name;
+	@ManyToOne(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
+	@JoinColumn(name="locationId")
 	LocationEntity location;
-	String rating;
+//	@Column
+	transient String rating;
+	@Column
 	String hoursOfOperation;
 
 	
@@ -30,6 +43,7 @@ public class RestaurantsEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	public LocationEntity getLocation() {
 		return location;

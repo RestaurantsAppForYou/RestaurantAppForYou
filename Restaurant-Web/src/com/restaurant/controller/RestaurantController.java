@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.restaurant.service.RestaurantsServiceInterface;
@@ -20,41 +21,54 @@ public class RestaurantController {
 	@Autowired
 	RestaurantsServiceInterface restaurantsService;
 
-	@RequestMapping("/List")
+	@RequestMapping(value ="/List", method =RequestMethod.GET)
 	public ModelAndView getRestaurants() {
 		// TODO Auto-generated method stub
+		Location location = new Location();
+		Restaurants restaurants = new Restaurants();
 
 		int i = 0;
 		String restaurantId = "" + i;
 		List<Restaurants> restaurantsList = new ArrayList<Restaurants>();
 
-		ModelAndView modelAndView = new ModelAndView("RestaurantsList");
+		ModelAndView modelAndView = new ModelAndView();
 
 		List<RestaurantsEntity> restaurantsEntityList = restaurantsService
 				.getAllRestaurants();
+		
+		if (restaurantsEntityList != null) {
 
-		for (RestaurantsEntity restaurantsEntity : restaurantsEntityList) {
+			for (RestaurantsEntity restaurantsEntity : restaurantsEntityList) {
 
-			Location location = new Location();
-			Restaurants restaurants = new Restaurants();
-			// Location Details Translation
-			location.setCity(restaurantsEntity.getLocation().getCity());
-			location.setContactDetails(restaurantsEntity.getLocation()
-					.getContactDetails());
-			location.setState(restaurantsEntity.getLocation().getState());
-			location.setStreet(restaurantsEntity.getLocation().getStreet());
-			location.setZipCode(restaurantsEntity.getLocation().getZipCode());
+				
+				// Location Details Translation
+				location.setCity(restaurantsEntity.getLocation().getCity());
+				location.setContactDetails(restaurantsEntity.getLocation()
+						.getContactDetails());
+				location.setState(restaurantsEntity.getLocation().getState());
+				location.setStreet(restaurantsEntity.getLocation().getStreet());
+				location.setZipCode(restaurantsEntity.getLocation()
+						.getZipCode());
 
-			// Restaurant details Translation
-			restaurants.setHoursOfOperation(restaurantsEntity
-					.getHoursOfOperation());
-			restaurants.setLocation(location);
-			restaurants.setName(restaurantsEntity.getName());
-			restaurants.setRating(restaurantsEntity.getRating());
-			i++;
-			restaurants.setRestaurantID(restaurantId);
+				// Restaurant details Translation
+				restaurants.setHoursOfOperation(restaurantsEntity
+						.getHoursOfOperation());
+				restaurants.setLocation(location);
+				restaurants.setName(restaurantsEntity.getName());
+				restaurants.setRating(restaurantsEntity.getRating());
+				i++;
+//				restaurants.setRestaurantID(restaurantId);
+				
+				restaurantsList.add(restaurants);
+
+			}
 
 		}
+		
+		System.out.println(restaurantsEntityList);
+		
+		modelAndView.addObject("restaurants", restaurantsList);
+		modelAndView.setViewName("RestaurantsList");
 
 		return modelAndView;
 	}

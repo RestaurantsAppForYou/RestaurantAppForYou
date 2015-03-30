@@ -18,7 +18,9 @@ public class RestaurantsService implements RestaurantsServiceInterface{
 	public List<RestaurantsEntity> getAllRestaurants() {
 		// TODO Auto-generated method stub
 		
-		return null;
+		List<RestaurantsEntity> listOdRestaurants =	restaurantsDAO.getAllRestaurants();
+		
+		return listOdRestaurants;
 	}
 
 }
