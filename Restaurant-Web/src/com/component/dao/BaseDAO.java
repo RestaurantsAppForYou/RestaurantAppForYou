@@ -1,4 +1,4 @@
-package com.restaurants.dao;
+package com.component.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

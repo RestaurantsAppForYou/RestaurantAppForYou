@@ -1,32 +1,14 @@
-package com.restaurants.entity;
+package com.component.info;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity(name="location")
-public class LocationEntity {
-	@Id
-	@Column(name="locationId")
-	String Id;
-	@Column
+public class Address {
+
 	String street;
-	@Column
 	String city;
-	@Column
 	String state;
-	@Column
 	Integer zipCode;
-	@Column
 	String contactDetails;
-	
-	public String getiD() {
-		return Id;
-	}
-
-	public void setiD(String iD) {
-		this.Id = iD;
-	}
 
 	public String getStreet() {
 		return street;

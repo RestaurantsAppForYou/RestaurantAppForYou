@@ -1,8 +1,10 @@
-package com.restaurants.dao;
+package com.component.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import com.component.dao.BaseDAO;
 
 public class BaseHibernateDAO implements BaseDAO {
 

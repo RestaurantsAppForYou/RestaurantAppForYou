@@ -30,6 +30,8 @@
 		<td>${current.hoursOfOperation}</td>
 		<td>${current.rating}</td>
 	</tr>
+	
+	<c:out value="${JSON}"></c:out>
 	<c:forEach items="${restaurants}" var="current">
 	</c:forEach>
 

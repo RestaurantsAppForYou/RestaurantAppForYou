@@ -1,4 +1,4 @@
-package com.restaurants.info;
+package com.component.info;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

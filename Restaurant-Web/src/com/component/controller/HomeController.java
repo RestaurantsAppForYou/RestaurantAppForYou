@@ -1,4 +1,4 @@
-package com.restaurant.controller;
+package com.component.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +8,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String getHome() {
-		return "redirect:Restaurants/List";
+		return "redirect:Restaurants/List/{name}";
 	}
 
 }
