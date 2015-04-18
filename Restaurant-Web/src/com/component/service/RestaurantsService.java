@@ -19,6 +19,8 @@ public class RestaurantsService implements ComponentService {
 
 		List<ComponentEntity> listOdRestaurants = restaurantsDAO
 				.getAllComponent();
+		
+		System.out.println("listOdRestaurants---------------->"+listOdRestaurants);
 
 		return listOdRestaurants;
 	}
@@ -35,6 +37,8 @@ public class RestaurantsService implements ComponentService {
 	public List<ComponentEntity> getAllComponents() {
 
 		List<ComponentEntity> listOfComponents =getAllRestaurants();
+		
+		System.out.println("listOfComponents::++++++++++++++++++++++"+listOfComponents);
 		
 		return listOfComponents;
 	}

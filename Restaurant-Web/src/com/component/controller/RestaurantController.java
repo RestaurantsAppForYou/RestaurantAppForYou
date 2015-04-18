@@ -2,8 +2,10 @@ package com.component.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.component.entity.ComponentEntity;
+import com.component.entity.HoursOfOperationEntity;
 import com.component.entity.RestaurantsEntity;
 import com.component.info.Address;
 import com.component.info.ComponentInfo;
+import com.component.info.ComponentResponse;
+import com.component.info.HoursOfOperationInfo;
 import com.component.info.Restaurants;
 import com.component.service.ComponentService;
 import com.component.utils.TranslatorUtil;
@@ -29,70 +34,72 @@ public class RestaurantController implements ComponentController {
 
 	@Autowired
 	ComponentService restaurantsService;
+	ComponentResponse componentResponse;
+
+	public RestaurantController() {
+		componentResponse = (null == componentResponse) ? (new ComponentResponse())
+				: componentResponse;
+	}
 
 	@RequestMapping(value = "/List/{name}", method = RequestMethod.GET)
-	public @ResponseBody List<ComponentInfo> getAllComponents(
+	public @ResponseBody ComponentResponse getAllComponents(
 			@PathVariable String name) {
 
-		if (null != name)
+		System.out.println("name : " + name);
+		if (null != name && !("1".equalsIgnoreCase(name)))
 			return getRestaurantsByName(name);
 		else
 			return getRestaurantsList();
 	}
 
-	private List<ComponentInfo> getRestaurantsList() {
+	// @RequestMapping(value = "/List", method = RequestMethod.GET)
+	public ComponentResponse getRestaurantsList() {
 
-		// ModelAndView modelAndView = new ModelAndView();
-		List<ComponentInfo> restaurantsList = null;
+//		ModelAndView modelAndView = new ModelAndView();
 
 		List<ComponentEntity> restaurantsEntityList = restaurantsService
 				.getAllComponents();
 
-		if (restaurantsEntityList != null) {
-			restaurantsList = new ArrayList<ComponentInfo>();
-			restaurantsList = TranslatorUtil
-					.getRestaurantsTranslator(restaurantsEntityList);
+		if (null != restaurantsEntityList) {
+			componentResponse.setConponentInfoList(TranslatorUtil
+					.getRestaurantsTranslator(restaurantsEntityList));
 		}
 
-		/*
-		 * Map<Object, Object> jsonMap = new HashMap<Object, Object>();
-		 * 
-		 * try { jsonMap.put(Restaurants.class.newInstance(), restaurantsList);
-		 * } catch (InstantiationException e) { // TODO Auto-generated catch
-		 * block e.printStackTrace(); } catch (IllegalAccessException e) { //
-		 * TODO Auto-generated catch block e.printStackTrace(); } //
-		 * System.out.println(restaurants,restaurantsEntityList);
-		 * 
-		 * JSONObject jSONObject = new org.json.JSONObject(jsonMap);
-		 * 
-		 * System.out.println("JSON: " + jSONObject);
-		 */
-		// modelAndView.addObject("restaurants", restaurantsList);
-		// modelAndView.setViewName("RestaurantsList");
-
-		// modelMap.put("JSON", jSONObject);
-
-		// return restaurantsList;
-
-		return restaurantsList;
-
+		return componentResponse;
 	}
 
-	// @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-	private List<ComponentInfo> getRestaurantsByName(@PathVariable String name) {
+	/*
+	 * Map<Object, Object> jsonMap = new HashMap<Object, Object>();
+	 * 
+	 * try { jsonMap.put(Restaurants.class.newInstance(), restaurantsList); }
+	 * catch (InstantiationException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (IllegalAccessException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); } //
+	 * System.out.println(restaurants,restaurantsEntityList);
+	 * 
+	 * JSONObject jSONObject = new org.json.JSONObject(jsonMap);
+	 * 
+	 * System.out.println("JSON: " + jSONObject);
+	 */
 
-		List<ComponentInfo> restaurantsList = null;
+	// modelMap.put("JSON", jSONObject);
+
+	// return restaurantsList;
+
+	// @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+	private ComponentResponse getRestaurantsByName(@PathVariable String name) {
+
+		ComponentResponse componentResponse = new ComponentResponse();
 
 		List<ComponentEntity> restaurantsEntityList = restaurantsService
 				.getComponentsById(name);
 
-		if (restaurantsEntityList != null) {
-			restaurantsList = new ArrayList<ComponentInfo>();
-			restaurantsList = TranslatorUtil
-					.getRestaurantsTranslator(restaurantsEntityList);
+		if (null != restaurantsEntityList) {
+			componentResponse.setConponentInfoList(TranslatorUtil
+					.getRestaurantsTranslator(restaurantsEntityList));
 		}
 
-		return restaurantsList;
+		return componentResponse;
 	}
 
 	@RequestMapping("/Add")
@@ -101,7 +108,7 @@ public class RestaurantController implements ComponentController {
 	}
 
 	@Override
-	public ComponentInfo getComponent(String s) {
+	public ComponentResponse getComponent(String s) {
 		// TODO Auto-generated method stub
 		return null;
 	}

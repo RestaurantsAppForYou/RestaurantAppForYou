@@ -1,14 +1,15 @@
-package com.component.controller;
+	package com.component.controller;
 
 import java.util.List;
 
 import com.component.info.ComponentInfo;
+import com.component.info.ComponentResponse;
 
 public interface ComponentController {
 
-	public List<ComponentInfo> getAllComponents(String s);
+	public ComponentResponse getAllComponents(String s);
 	
-	public ComponentInfo getComponent(String s);
+	public ComponentResponse getComponent(String s);
 	
 	public String addComponent(String s);
 	

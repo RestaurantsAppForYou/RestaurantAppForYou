@@ -70,13 +70,9 @@ public class RestaurantsHibernateDAO extends BaseHibernateDAO implements
 //System.out.println(session.createQuery(arg0));
 //		listOfRestaurants = (session.createQuery(arg0)).list();
 		
-		Criteria crit = session.createCriteria(RestaurantsEntity.class);
 		
-		
-		 crit.add(Restrictions.eq("zipCode", Integer.getInteger(iD)));
-
-		 listOfRestaurants = crit.list();
-		 
+		String queryString = "from RestaurantsEntity where ";
+		session.createQuery(queryString);
 		
 		System.out.println("List : "+ listOfRestaurants);
 		session.getTransaction().commit();
@@ -95,6 +91,8 @@ public class RestaurantsHibernateDAO extends BaseHibernateDAO implements
 		listOfAllRestaurants = (List<ComponentEntity>) session
 				.createCriteria(RestaurantsEntity.class).list();
 		session.getTransaction().commit();
+		
+		
 		System.out.println("list of Restaurants" + listOfAllRestaurants);
 		return listOfAllRestaurants;
 	}

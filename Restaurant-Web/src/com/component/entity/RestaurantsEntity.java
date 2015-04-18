@@ -4,23 +4,28 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
@@ -35,8 +40,6 @@ import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.CollectionType;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.component.commons.ElementTime;
-import com.component.commons.HoursOfOperation;
 import com.component.entity.AddressEntity;
 import com.component.entity.LocationEntity;
 
@@ -44,40 +47,22 @@ import com.component.entity.LocationEntity;
 @Inheritance
 public class RestaurantsEntity extends ComponentEntity {
 
-	public enum TypeOfRestaurant {
-		VEGITARIAN, NON_VEGITARIAN
-	}
-
-	public enum HoursOfOperation {
-
-		BREAKFAST, BRUNCH, LUNCH, DINNER, OPENTOCLOSE;
-	}
-
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "address_id")
 	private AddressEntity address;
-
-	@MapKeyEnumerated(EnumType.STRING)
-	@ElementCollection(fetch = FetchType.LAZY)
-	@JoinTable(	name = "OPERATING_HOURS", 
-				joinColumns = @JoinColumn(name = "component_id")
-	)
-	private Map<HoursOfOperation, ElementTime> hoursOfOperationConfig; //
-
-	// //only
-	// setter
-	// no
-	// getter
-
-	// @ElementCollection()
-	// private List<HoursOfOperation> hoursOfOperation;
-
-	// private Map<>
-
-	@Column(name = "RESTAURANT_TYPE")
-	private TypeOfRestaurant typeOfRestaurant;
 
 	@Embedded
 	private LocationEntity restaurantLocation;
+
+	@Column(name = "RESTAURANT_TYPE")
+	private boolean vegitarian;
+
+	
+	@ElementCollection
+	@JoinTable(	name = "HoursOfOperationEntity",
+				joinColumns= @JoinColumn(name="component_id")
+			)
+	private Set<HoursOfOperationEntity> hoursOfOperationEntity = new HashSet<HoursOfOperationEntity>();
 
 	public AddressEntity getAddressId() {
 		return address;
@@ -87,30 +72,12 @@ public class RestaurantsEntity extends ComponentEntity {
 		this.address = addressId;
 	}
 
-	/*
-	 * public List<HoursOfOperation> getHoursOfOperation() {
-	 * 
-	 * if (null != hoursOfOperation) {
-	 * 
-	 * return hoursOfOperation; } else return hoursOfOperation = new
-	 * ArrayList<HoursOfOperation>();
-	 * 
-	 * }
-	 */
 	public LocationEntity getRestaurantLocation() {
 		return restaurantLocation;
 	}
 
 	public void setRestaurantLocation(LocationEntity restaurantLocation) {
 		this.restaurantLocation = restaurantLocation;
-	}
-
-	public TypeOfRestaurant getTypeOfRestaurant() {
-		return typeOfRestaurant;
-	}
-
-	public void setTypeOfRestaurant(TypeOfRestaurant typeOfRestaurant) {
-		this.typeOfRestaurant = typeOfRestaurant;
 	}
 
 	public AddressEntity getAddress() {
@@ -121,20 +88,29 @@ public class RestaurantsEntity extends ComponentEntity {
 		this.address = address;
 	}
 
-	public Map<HoursOfOperation, ElementTime> getHoursOfOperationConfig() {
-		return hoursOfOperationConfig;
+	public boolean isVegitarian() {
+		return vegitarian;
 	}
 
-	public void setHoursOfOperationConfig(
-			Map<HoursOfOperation, ElementTime> hoursOfOperationConfig) {
-		this.hoursOfOperationConfig = hoursOfOperationConfig;
+	public void setVegitarian(boolean vegitarian) {
+		this.vegitarian = vegitarian;
+	}
+	
+
+	public Set<HoursOfOperationEntity> getHoursOfOperationEntity() {
+		return hoursOfOperationEntity;
+	}
+
+	public void setHoursOfOperationEntity(
+			Set<HoursOfOperationEntity> hoursOfOperationEntity) {
+		this.hoursOfOperationEntity = hoursOfOperationEntity;
 	}
 
 	@Override
 	public String toString() {
 		return "RestaurantsEntity [address=" + address
-				+ ", hoursOfOperationConfig=" + hoursOfOperationConfig
-				+ ", typeOfRestaurant=" + typeOfRestaurant
-				+ ", restaurantLocation=" + restaurantLocation + "]";
+				+ ", restaurantLocation=" + restaurantLocation
+				+ ", vegitarian=" + vegitarian + ", hoursOfOperationEntity="
+				+ hoursOfOperationEntity + "]";
 	}
 }

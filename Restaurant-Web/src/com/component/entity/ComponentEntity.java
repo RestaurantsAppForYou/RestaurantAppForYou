@@ -9,7 +9,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 
-@Entity(name="COMPONENT")
+@Entity
+@Table(name="COMPONENT")
 public abstract class ComponentEntity {
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)

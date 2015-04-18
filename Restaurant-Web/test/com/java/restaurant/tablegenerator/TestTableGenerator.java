@@ -1,19 +1,22 @@
 package com.java.restaurant.tablegenerator;
 
 import java.sql.Time;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.component.commons.ElementTime;
+import com.component.commons.DayType;
 import com.component.entity.AddressEntity;
+import com.component.entity.ComponentEntity;
+import com.component.entity.DayTimeEntity;
+import com.component.entity.HoursOfOperationEntity;
 import com.component.entity.LocationEntity;
 import com.component.entity.RestaurantsEntity;
-import com.component.entity.RestaurantsEntity.HoursOfOperation;
-import com.component.entity.RestaurantsEntity.TypeOfRestaurant;
 
 public class TestTableGenerator {
 
@@ -35,21 +38,76 @@ public class TestTableGenerator {
 
 		restaurant.setRestaurantLocation(restaurantLocation);
 		restaurant.setName("AHAR");
-		restaurant.setTypeOfRestaurant(TypeOfRestaurant.NON_VEGITARIAN);
-		ElementTime elementTime = new ElementTime(new Time(7, 0, 0), new Time(
-				10, 0, 0));
-		HoursOfOperation hoursOfOperation = HoursOfOperation.BREAKFAST;
-
+		restaurant.setVegitarian(false);
+		
 //		restaurant.getHoursOfOperation().add(hoursOfOperation);
 		
+	
+		
+	
 		
 		
-		Map<HoursOfOperation, ElementTime> hoursOfOperationConfig = new HashMap<RestaurantsEntity.HoursOfOperation, ElementTime>();
+		
+		HoursOfOperationEntity hoursOfOperationEntity = new HoursOfOperationEntity();
+		
+		hoursOfOperationEntity.setDayType(DayType.BREAKFAST.toString());
+		hoursOfOperationEntity.setFridaystartTime("7:00 AM");
+		hoursOfOperationEntity.setFridayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity.setMondayStartTime("7:00 AM");
+		hoursOfOperationEntity.setMondayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity.setTuesdaystartTime("7:00 AM");
+		hoursOfOperationEntity.setTuesdayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity.setWednesdayStartTime("7:00 AM");
+		hoursOfOperationEntity.setWednesdayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity.setThursdayStartTime("7:00 AM");
+		hoursOfOperationEntity.setThursdayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity.setSaturdaystartTime("8:00 AM");
+		hoursOfOperationEntity.setSaturdayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity.setSundaystartTime("8:00 AM");
+		hoursOfOperationEntity.setSundayEndTime("10:00 AM");
+//		hoursOfOperationEntity.setComponentEntity(restaurant);
 		
 		
-		hoursOfOperationConfig.put(hoursOfOperation, elementTime);
 		
-		restaurant.setHoursOfOperationConfig(hoursOfOperationConfig);
+		
+		
+		HoursOfOperationEntity hoursOfOperationEntity2 = new HoursOfOperationEntity();
+		
+		hoursOfOperationEntity2.setDayType(DayType.LUNCH.toString());
+		hoursOfOperationEntity2.setFridaystartTime("7:00 AM");
+		hoursOfOperationEntity2.setFridayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity2.setMondayStartTime("7:00 AM");
+		hoursOfOperationEntity.setMondayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity2.setTuesdaystartTime("7:00 AM");
+		hoursOfOperationEntity2.setTuesdayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity2.setWednesdayStartTime("7:00 AM");
+		hoursOfOperationEntity2.setWednesdayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity2.setThursdayStartTime("7:00 AM");
+		hoursOfOperationEntity2.setThursdayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity2.setSaturdaystartTime("8:00 AM");
+		hoursOfOperationEntity2.setSaturdayEndTime("10:00 AM");
+		
+		hoursOfOperationEntity2.setSundaystartTime("8:00 AM");
+		hoursOfOperationEntity2.setSundayEndTime("10:00 AM");
+		
+//		hoursOfOperationEntity2.setComponentEntity(restaurant);
+		
+		
+	Set<HoursOfOperationEntity> hoursOfOperationEntityList = new HashSet<HoursOfOperationEntity>();
+	hoursOfOperationEntityList.add(hoursOfOperationEntity);
+	hoursOfOperationEntityList.add(hoursOfOperationEntity2);
+		restaurant.setHoursOfOperationEntity(hoursOfOperationEntityList);;
 		
 
 		SessionFactory sf = new Configuration().configure()
@@ -59,7 +117,6 @@ public class TestTableGenerator {
 		session.save(restaurant);
 		session.getTransaction().commit();
 		session.close();
-
-	}
-
+		
+		}
 }

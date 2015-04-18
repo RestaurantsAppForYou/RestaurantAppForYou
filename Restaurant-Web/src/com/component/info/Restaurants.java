@@ -1,48 +1,59 @@
 package com.component.info;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
+
+import com.component.entity.AddressEntity;
+import com.component.entity.ComponentEntity;
+import com.component.entity.HoursOfOperationEntity;
+import com.component.entity.LocationEntity;
 import com.component.info.Address;
 import com.component.info.Location;
 
-public class Restaurants extends ComponentInfo{
+public class Restaurants extends ComponentInfo {
 
-	String restaurantID;
-	String name;
-	Address address;
-	Date startTime;
-	Location restaurantLocation;
+	private Address address;
 
-	public String getRestaurantID() {
-		return restaurantID;
+	private Location restaurantLocation;
+
+	private boolean vegitarian;
+
+	private Set<HoursOfOperationInfo> hoursOfOperations;
+
+	public Set<HoursOfOperationInfo> getHoursOfOperations() {
+
+		hoursOfOperations = (null == hoursOfOperations) ? new HashSet<HoursOfOperationInfo>()
+				: hoursOfOperations;
+
+		return hoursOfOperations;
 	}
 
-	public void setRestaurantID(String restaurantID) {
-		this.restaurantID = restaurantID;
+	
+	
+	public void setHoursOfOperations(Set<HoursOfOperationInfo> hoursOfOperations) {
+		this.hoursOfOperations = hoursOfOperations;
 	}
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public Address getAddress() {
+	public Address getAddressId() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setAddressId(Address addressId) {
+		this.address = addressId;
 	}
 
 	public Location getRestaurantLocation() {
@@ -53,11 +64,25 @@ public class Restaurants extends ComponentInfo{
 		this.restaurantLocation = restaurantLocation;
 	}
 
-	@Override
-	public String toString() {
-		return "Restaurants [restaurantID=" + restaurantID + ", name=" + name
-				+ ", address=" + address + ", hoursOfOperation="
-				+ startTime + ", location=" + restaurantLocation + "]";
+	public Address getAddress() {
+		return address;
 	}
 
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public boolean isVegitarian() {
+		return vegitarian;
+	}
+
+	public void setVegitarian(boolean vegitarian) {
+		this.vegitarian = vegitarian;
+	}
+
+	@Override
+	public String toString() {
+		return "Restaurants [address=" + address + ", restaurantLocation="
+				+ restaurantLocation + ", vegitarian=" + vegitarian + "]";
+	}
 }
