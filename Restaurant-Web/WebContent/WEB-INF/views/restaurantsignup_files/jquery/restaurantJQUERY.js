@@ -213,7 +213,7 @@ function fillInAddress() {
 			document.getElementById(addressType).value = val;
 		}
 	}
-}
+} 
 // [END region_fillform]
 
 // [START region_geolocation]
